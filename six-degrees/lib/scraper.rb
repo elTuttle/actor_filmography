@@ -36,9 +36,3 @@ class Scraper
   end
 
 end
-
-
-films = Scraper.scrape_actor_page("Johnny Depp")
-actors = Scraper.scrape_film_page("https://www.rottentomatoes.com/m/blade_runner_2049")
-
-puts actors
