@@ -11,11 +11,11 @@ class Scraper
 
     actor_url = "https://www.rottentomatoes.com/celebrity/" + actor
     doc = Nokogiri::HTML(open(actor_url))
-
-    temp_array = []
+    temp_array = {}
 
     doc.css("#filmographyTbl .unstyled").each do |film|
-      temp_array << film.text
+      url_string = film.attribute("href").value
+      temp_array[film.text] = url_string
     end
 
     temp_array
@@ -36,3 +36,5 @@ class Scraper
   end
 
 end
+
+Scraper.scrape_actor_page("Johnny Depp")
