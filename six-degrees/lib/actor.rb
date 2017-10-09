@@ -30,6 +30,22 @@ class Actor
       end
     end
   end
+
+  def six_degrees(other_actor)
+    @filmography.each do |key,value|
+      begin
+        puts key
+        degree_one = Scraper.scrape_film_page(key, value)
+        puts degree_one
+        if value.include?(other_actor)
+          puts key
+        end
+      rescue OpenURI::HTTPError => ex
+        puts "#{key} cannot be found"
+        puts ""
+      end
+    end  
+  end
   
 end
 

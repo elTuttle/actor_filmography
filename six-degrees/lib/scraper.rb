@@ -38,5 +38,3 @@ class Scraper
   end
 
 end
-
-Scraper.scrape_actor_page("Johnny Depp")

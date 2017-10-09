@@ -1,4 +1,6 @@
 require 'pry'
+require_relative "../lib/scraper.rb"
+require_relative "../lib/actor.rb"
 
 class Film
 
@@ -10,7 +12,7 @@ class Film
     @url = filmURL
   end
 
-  def actors
+  def actors(title,url)
     begin
       puts key
       temp_array = Scraper.scrape_film_page(key, value)
