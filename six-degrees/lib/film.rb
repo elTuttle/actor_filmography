@@ -2,11 +2,12 @@ require 'pry'
 
 class Film
 
-  attr_reader :name
+  attr_reader :name, :url
   attr_accessor :actors
 
-  def initialize(name)
+  def initialize(name, filmURL)
     @name = name
+    @url = filmURL
   end
 
 
