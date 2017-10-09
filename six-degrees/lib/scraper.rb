@@ -21,17 +21,18 @@ class Scraper
     temp_array
   end
 
-  def self.scrape_film_page(film)
-    film_url = "https://www.rottentomatoes.com" + film
+  def self.scrape_film_page(film,film_url)
+    film_url = "https://www.rottentomatoes.com" + film_url
     doc = Nokogiri::HTML(open(film_url))
 
-    temp_array = []
+    temp_array = {}
+    temp_array[film] = []
 
     doc.css(".castSection .unstyled span").each do |actor|
       actor_name = actor.text
       actor_name = actor_name.split(" ")
       actor_name = actor_name.join(" ")
-      temp_array << actor_name
+      temp_array[film] << actor_name
     end
     temp_array
   end

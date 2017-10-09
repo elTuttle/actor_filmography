@@ -6,25 +6,33 @@ class Actor
   attr_reader :name
   attr_accessor :filmography
 
+  @@all = []
+
   def initialize(name)
     @name = name
     @filmography = Scraper.scrape_actor_page(name)
+    @@all << self
+  end
+
+  def self.all
+    @@all
   end
 
   def costars
     @filmography.each do |key,value|
       begin
         puts key
-        temp_array = Scraper.scrape_film_page(value)
+        temp_array = Scraper.scrape_film_page(key, value)
         puts temp_array
       rescue OpenURI::HTTPError => ex
-        puts "URL cannot be found"
+        puts "#{key} cannot be found"
+        puts ""
       end
     end
   end
   
 end
 
-johnny_depp = Actor.new("Johnny Depp")
+ben_kingsley = Actor.new("Ben Kingsley")
 binding.pry
 

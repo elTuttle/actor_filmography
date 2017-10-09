@@ -10,5 +10,15 @@ class Film
     @url = filmURL
   end
 
+  def actors
+    begin
+      puts key
+      temp_array = Scraper.scrape_film_page(key, value)
+      puts temp_array
+    rescue OpenURI::HTTPError => ex
+      puts "#{key} cannot be found"
+      puts ""
+    end
+  end
 
 end
