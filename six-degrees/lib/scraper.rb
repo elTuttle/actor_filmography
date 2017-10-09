@@ -22,7 +22,7 @@ class Scraper
   end
 
   def self.scrape_film_page(film)
-    film_url = "https://www.rottentomatoes.com/" + film
+    film_url = "https://www.rottentomatoes.com" + film
     doc = Nokogiri::HTML(open(film_url))
 
     temp_array = []
