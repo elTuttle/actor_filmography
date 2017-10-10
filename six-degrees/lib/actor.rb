@@ -32,12 +32,8 @@ class Actor
     end
   end
 
-  def six_degrees(other_actor)
+  def have_worked_with?(other_actor)
     progress_one = ProgressBar.create(:title => "First seperation", :total => @filmography.length)
-    progress_two = ProgressBar.create(:title => "Second seperation", :total => @filmography.length)
-    progress_three = ProgressBar.create(:title => "Third seperation", :total => @filmography.length)
-    six_seperation_degree_hash = {}
-
 
     @filmography.each do |key,value|
       progress_one.increment
@@ -45,7 +41,6 @@ class Actor
         degree_one = Scraper.scrape_film_page(key, value)
         degree_one.each do |d_one_key, d_one_actors|
           d_one_actors.each do |d_one_actor|
-
             if d_one_actor == other_actor
               return "1st degree, #{d_one_key}, #{d_one_actor}"
             end
@@ -54,82 +49,7 @@ class Actor
       rescue OpenURI::HTTPError => ex
       end
     end
-
-    @filmography.each do |key,value|
-      progress_two.increment
-      begin
-        degree_one = Scraper.scrape_film_page(key, value)
-        degree_one.each do |d_one_key, d_one_actors|
-          d_one_actors.each do |d_one_actor|
-            d_one_actor_filmography = Scraper.scrape_actor_page(d_one_actor)
-            d_one_actor_filmography.each do |film, film_url|
-              begin
-                degree_two = Scraper.scrape_film_page(film, film_url)
-                degree_two.each do |d_two_key, d_two_actors|
-                  d_two_actors.each do |d_two_actor|
-                    if d_two_actor == other_actor
-                      return "2nd degree, #{@name} => #{d_one_key} => #{d_one_actor} => #{d_two_key} => #{d_two_actor}"
-                    end
-                  end
-                end
-              rescue OpenURI::HTTPError => ex
-              end
-            end
-          end
-        end
-      rescue OpenURI::HTTPError => ex
-      end
-    end
-
-    @filmography.each do |key,value|
-      progress_three.increment
-      begin
-        degree_one = Scraper.scrape_film_page(key, value)
-        degree_one.each do |d_one_key, d_one_actors|
-          d_one_actors.each do |d_one_actor|
-            puts "#{d_one_actor} D1"
-            d_one_actor_filmography = Scraper.scrape_actor_page(d_one_actor)
-            d_one_actor_filmography.each do |film, film_url|
-              begin
-                degree_two = Scraper.scrape_film_page(film, film_url)
-                degree_two.each do |d_two_key, d_two_actors|
-                  d_two_actors.each do |d_two_actor|
-                    puts "#{d_two_actor} D2"
-                    d_three_actor_filmography = Scraper.scrape_actor_page(d_two_actor)
-                    d_three_actor_filmography.each do |film, film_url|
-                    begin
-                      degree_three = Scraper.scrape_film_page(film, film_url)
-                      degree_three.each do |d_three_key, d_three_actors|
-                        d_three_actors.each do |d_three_actor|
-                        binding.pry
-                          if d_three_actor == other_actor
-                            return "3rd degree, #{@name} => #{d_one_key} => #{d_one_actor} => #{d_two_key} => #{d_two_actor} => #{d_three_key} => #{d_three_actor}"
-                          end
-
-                        end
-
-                      end
-
-                      rescue OpenURI::HTTPError => ex
-                    end
-                  end
-                end
-              end
-              rescue OpenURI::HTTPError => ex
-            end
-          end
-        end
-      end
-      rescue OpenURI::HTTPError => ex
-      end
-    end
-
   end
-
-end
 
 ben_kingsley = Actor.new("Ben Kingsley")
 binding.pry
-#if d_three_actor == other_actor
-#  return "2nd degree, #{@name} => #{d_one_key} => #{d_one_actor} => #{d_two_key} => #{d_two_actor}"
-#end
