@@ -1,5 +1,6 @@
 require 'pry'
 require_relative "../lib/scraper.rb"
+require
 
 class Actor
 
@@ -20,7 +21,6 @@ class Actor
 
   def costars
     @filmography.each do |key,value|
-      progress = ProgressBar.create
       begin
         puts key
         temp_array = Scraper.scrape_film_page(key, value)
@@ -34,11 +34,12 @@ class Actor
 
   def six_degrees(other_actor)
     @filmography.each do |key,value|
+      progress_one = ProgressBar.create
       begin
         degree_one = Scraper.scrape_film_page(key, value)
         degree_one.each do |d_one_key, d_one_actors|
           d_one_actors.each do |d_one_actor|
-
+            progress.increment
             if d_one_actor == other_actor
               return "1st degree, #{d_one_key}, #{d_one_actor}"
             end
