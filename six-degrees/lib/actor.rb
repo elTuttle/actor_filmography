@@ -52,5 +52,3 @@ class Actor
   end
 
 end
-
-binding.pry

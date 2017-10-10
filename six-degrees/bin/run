@@ -2,3 +2,22 @@
 
 require_relative "../lib/scraper.rb"
 require_relative "../lib/actor.rb"
+
+puts "what is the actors name?"
+actor_input = gets.chomp
+
+actor_one = Actor.new(actor_input)
+
+puts "0 for filmography, 1 for all co-stars, 2 for specific info on a film, 3 to see if theyve worked with another actor"
+
+number_input = gets.chomp
+
+if number_input == "0"
+  actor_one.filmography.each do |key,value|
+    puts key
+  end
+end
+
+if number_input == "1"
+  puts actor_one.costars
+end
