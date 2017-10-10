@@ -1,6 +1,6 @@
 require 'pry'
+require 'ruby-progressbar'
 require_relative "../lib/scraper.rb"
-require
 
 class Actor
 
@@ -33,13 +33,19 @@ class Actor
   end
 
   def six_degrees(other_actor)
+    progress_one = ProgressBar.create(:title => "First seperation", :total => @filmography.length)
+    progress_two = ProgressBar.create(:title => "Second seperation", :total => @filmography.length)
+    progress_three = ProgressBar.create(:title => "Third seperation", :total => @filmography.length)
+    six_seperation_degree_hash = {}
+
+
     @filmography.each do |key,value|
-      progress_one = ProgressBar.create
+      progress_one.increment
       begin
         degree_one = Scraper.scrape_film_page(key, value)
         degree_one.each do |d_one_key, d_one_actors|
           d_one_actors.each do |d_one_actor|
-            progress.increment
+
             if d_one_actor == other_actor
               return "1st degree, #{d_one_key}, #{d_one_actor}"
             end
@@ -50,6 +56,7 @@ class Actor
     end
 
     @filmography.each do |key,value|
+      progress_two.increment
       begin
         degree_one = Scraper.scrape_film_page(key, value)
         degree_one.each do |d_one_key, d_one_actors|
@@ -75,6 +82,7 @@ class Actor
     end
 
     @filmography.each do |key,value|
+      progress_three.increment
       begin
         degree_one = Scraper.scrape_film_page(key, value)
         degree_one.each do |d_one_key, d_one_actors|
