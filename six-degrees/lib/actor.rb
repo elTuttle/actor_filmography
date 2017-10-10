@@ -33,7 +33,7 @@ class Actor
   end
 
   def have_worked_with?(other_actor)
-    progress_one = ProgressBar.create(:title => "First seperation", :total => @filmography.length)
+    progress_one = ProgressBar.create(:title => "Processing through filmography", :total => @filmography.length)
 
     @filmography.each do |key,value|
       progress_one.increment
@@ -42,7 +42,7 @@ class Actor
         degree_one.each do |d_one_key, d_one_actors|
           d_one_actors.each do |d_one_actor|
             if d_one_actor == other_actor
-              return "1st degree, #{d_one_key}, #{d_one_actor}"
+              return "#{@name} worked with #{other_actor} in #{d_one_key}"
             end
           end
         end
@@ -51,5 +51,6 @@ class Actor
     end
   end
 
-ben_kingsley = Actor.new("Ben Kingsley")
+end
+
 binding.pry
