@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "six/degrees/version"
+require "actor_filmography/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "six-degrees"
-  spec.version       = Six::Degrees::VERSION
+  spec.name          = "actor_filmography"
+  spec.version       = ActorFilmography::VERSION
   spec.authors       = ["'John Tuttle'"]
   spec.email         = ["'thejwt@gmail.com'"]
 
