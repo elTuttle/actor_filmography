@@ -35,7 +35,7 @@ class Actor
   end
 
   def have_worked_with?(other_actor)
-    progress = ProgressBar.create(:title => "Processing through filmography", :total => @filmography.length)
+    progress = ProgressBar.create(:title => " Processing through filmography", :total => @filmography.length)
     havent_worked_with = true
     @filmography.each do |key,value|
       progress.increment
@@ -45,7 +45,8 @@ class Actor
           d_one_actors.each do |d_one_actor|
             if d_one_actor == other_actor
               havent_worked_with = false
-              puts "#{@name} worked with #{other_actor} in #{d_one_key}"
+              puts " "
+              puts "                              #{@name} worked with #{other_actor} in #{d_one_key}"
             end
           end
         end
