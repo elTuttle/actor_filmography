@@ -4,20 +4,21 @@ require 'pry'
 
 class Scraper
 
-  def self.scrape_actor_page(actor)
+  def self.scrape_actor_page(actor_name, actor)
     begin
-    actor = actor.split(" ")
-    actor = actor.join("_")
-    actor = actor.downcase
+    actor_name = actor_name.split(" ")
+    actor_name = actor_name.join("_")
+    actor_name = actor_name.downcase
 
-    actor_url = "https://www.rottentomatoes.com/celebrity/" + actor
+    actor_url = "https://www.rottentomatoes.com/celebrity/" + actor_name
 
     doc = Nokogiri::HTML(open(actor_url))
-    temp_array = {}
 
     doc.css("#filmographyTbl .unstyled").each do |film|
       url_string = film.attribute("href").value
-      temp_array[film.text] = url_string
+      title = film.text
+      film_obj = Film.new(title,url_string,actor)
+      actor.filmography << film_obj
     end
 
     temp_array

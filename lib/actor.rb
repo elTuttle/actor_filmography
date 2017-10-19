@@ -11,7 +11,8 @@ class Actor
 
   def initialize(name)
     @name = name
-    @filmography = Scraper.scrape_actor_page(name)
+    @filmography = []
+    Scraper.scrape_actor_page(name, self)
     @@all << self
   end
 
@@ -21,11 +22,11 @@ class Actor
 
   def costars
     progress = ProgressBar.create(:title => "Processing through filmography", :total => @filmography.length)
-    @filmography.each do |key,value|
+    @filmography.each do |film|
       progress.increment
       begin
-        puts key
-        temp_array = Scraper.scrape_film_page(key, value)
+        puts film.title
+        temp_array = Scraper.scrape_film_page(film.title, film.url)
         puts temp_array
       rescue OpenURI::HTTPError => ex
         puts "#{key} cannot be found"
@@ -37,10 +38,10 @@ class Actor
   def have_worked_with?(other_actor)
     progress = ProgressBar.create(:title => " Processing through filmography", :total => @filmography.length)
     havent_worked_with = true
-    @filmography.each do |key,value|
+    @filmography.each do |film|
       progress.increment
       begin
-        degree_one = Scraper.scrape_film_page(key, value)
+        degree_one = Scraper.scrape_film_page(film.title, film.url)
         degree_one.each do |d_one_key, d_one_actors|
           d_one_actors.each do |d_one_actor|
             if d_one_actor == other_actor
